@@ -1,0 +1,49 @@
+Ass - 7
+
+Assignment 7 :
+Containerization
+Prerequisite
+Concept of Containerization and Dockers containers.
+containerization is a technology that allows you to package and run applications and their dependencies
+in isolated environments called containers. Containers are lightweight, portable, and can run consistently
+across different computing environments, from a developer's local machine to production servers.
+Key Concepts of Containerization:
+1. Isolation: Containers provide process and file system isolation, meaning that each container runs
+independently and does not interfere with others. This isolation ensures that the software inside
+the container runs the same way regardless of where it is deployed.
+2. Portability: Containers package the application code, runtime, libraries, and dependencies
+together, making it easy to move the application between different environments. This eliminates
+the "it works on my machine" problem and simplifies deployment.
+3. Efficiency: Containers share the host operating system's kernel, which allows them to be more
+resource-efficient compared to traditional virtual machines (VMs). They start up quickly and
+have a smaller footprint, which helps in optimizing resource utilization.
+4. Consistency: By using containers, developers can ensure that applications run consistently
+across different stages of development, testing, and production. This consistency reduces bugs
+and discrepancies related to environment differences.
+Docker Containers:
+Docker is one of the most popular platforms for containerization. It provides tools to create, manage,
+and deploy containers efficiently. Here are some key components and features of Docker:
+1. Docker Engine: This is the core component of Docker. It is a runtime that runs and manages
+containers on a host system. It includes the Docker daemon, which manages container
+operations, and the Docker CLI (Command Line Interface), which provides commands to
+interact with Docker.
+2. Docker Images: Docker images are read-only templates that contain the application code,
+libraries, dependencies, and runtime needed to run a container. Images are used to create
+containers. They are built from a Dockerfile, which is a script that defines the steps to assemble
+the image.
+3. Docker Containers: A container is an instance of a Docker image. It is a lightweight,
+standalone, and executable package that includes everything needed to run a piece of software.
+Containers are created from images and can be started, stopped, and managed through Docker.
+4. Docker Hub: Docker Hub is a cloud-based registry service where you can find, share, and store
+Docker images. It hosts public and private repositories of images and facilitates easy distribution
+and5. Docker Compose: Docker Compose is a tool that allows you to define and run multi-container
+Docker applications. Using a docker-compose.yml file, you can specify the services, networks,
+and volumes needed for your application, and Docker Compose manages the setup and
+orchestration of these components.
+6. Docker Swarm and Kubernetes: These are orchestration tools that manage the deployment,
+scaling, and operation of containers in a clustered environment. Docker Swarm is Docker's native
+clustering and orchestration tool, while Kubernetes is a more powerful and widely adopted
+orchestration system.
+In summary, containerization with Docker provides a powerful way to develop, deploy, and manage
+applications with high portability, consistency, and efficiency. Docker simplifies many aspects of
+container management and has become a standard tool in modern software development and operations.

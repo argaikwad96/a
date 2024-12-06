@@ -1,0 +1,125 @@
+
+mi DEPOSIT
+
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+
+// Buffer size for inter-process communication
+#define BUFFER_SIZE 128
+
+// Function to deposit money
+void deposit(int write_fd) {
+    int amount = 1000;  // Example deposit amount
+    close(write_fd);    // Close the write end of the pipe
+    printf("Deposit process: Depositing %d\n", amount);
+    write(write_fd, &amount, sizeof(amount));  // Write amount to pipe
+    exit(0);  // Exit after depositing
+}
+
+// Function to withdraw money
+void withdraw(int read_fd) {
+    int balance;
+    read(read_fd, &balance, sizeof(balance));  // Read balance from pipe
+    if (balance < 200) {
+        printf("Withdraw process: Insufficient balance, going to sleep\n");
+        sleep(5);  // Sleep if insufficient balance
+    } else {
+        printf("Withdraw process: Withdrawing 200\n");
+        balance -= 200;  // Deduct amount
+        printf("Withdraw process: New balance %d\n", balance);
+    }
+    close(read_fd);    // Close the read end of the pipe
+    exit(0);  // Exit after withdrawal
+}
+
+// Function to handle EMI payments
+void emi(int read_fd) {
+    int balance;
+    read(read_fd, &balance, sizeof(balance));  // Read balance from pipe
+    if (balance < 500) {
+        printf("EMI process: Insufficient balance, going to sleep\n");
+        sleep(5);  // Sleep if insufficient balance
+    } else {
+        printf("EMI process: Paying EMI of 500\n");
+        balance -= 500;  // Deduct amount
+        printf("EMI process: New balance %d\n", balance);
+    }
+    close(read_fd);    // Close the read end of the pipe
+    exit(0);  // Exit after EMI payment
+}
+
+int main() {
+    int pipe_fd[2];  // Pipe file descriptors
+    pid_t pid;
+
+    if (pipe(pipe_fd) == -1) {  // Create a pipe
+        perror("pipe");
+        exit(EXIT_FAILURE);
+    }
+
+    // Create the deposit process
+    if ((pid = fork()) == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    } else if (pid == 0) {
+        deposit(pipe_fd[1]);  // Child process for deposit
+    }
+
+    // Create the withdraw process
+    if ((pid = fork()) == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    } else if (pid == 0) {
+        close(pipe_fd[1]);  // Close the write end of the pipe in withdraw process
+        withdraw(pipe_fd[0]);  // Child process for withdrawal
+    }
+
+    // Create the EMI process
+    if ((pid = fork()) == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    } else if (pid == 0) {
+        close(pipe_fd[1]);  // Close the write end of the pipe in EMI process
+        emi(pipe_fd[0]);  // Child process for EMI
+    }
+
+    // Parent process
+    close(pipe_fd[0]);  // Close both ends of the pipe in the parent process
+    close(pipe_fd[1]);
+
+    // Wait for all child processes to complete
+    while (wait(NULL) > 0);
+
+    return 0;
+}
+```
+
+### Algorithm and Explanation
+
+1. **Pipe Creation**:
+   - Use `pipe(pipe_fd)` to create a pipe with `pipe_fd[0]` for reading and `pipe_fd[1]` for writing.
+
+2. **Fork Processes**:
+   - Use `fork()` to create three child processes:
+     - **Deposit Process**: Writes an amount to the pipe.
+     - **Withdraw Process**: Reads the balance from the pipe, checks if the balance is sufficient, and either withdraws or sleeps.
+     - **EMI Process**: Reads the balance from the pipe, checks if the balance is sufficient, and either makes an EMI payment or sleeps.
+
+3. **Interprocess Communication**:
+   - The deposit process writes the balance to the pipe.
+   - Both the withdraw and EMI processes read the balance from the pipe and perform their operations accordingly.
+
+4. **Race Condition**:
+   - Since the withdraw and EMI processes sleep if the balance is insufficient, they will demonstrate a race condition when the balance is updated by the deposit process.
+
+5. **Cleanup**:
+   - Close pipe file descriptors in parent and child processes.
+   - Use `wait(NULL)` in the parent process to wait for all child processes to finish.
+
+### Summary
+
+This program illustrates basic interprocess communication and buffer allocation in a banking transaction scenario. The use of pipes allows processes to communicate and synchronize, while the sleep calls simulate delays due to insufficient funds, demonstrating a race condition.

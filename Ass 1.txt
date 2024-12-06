@@ -1,0 +1,98 @@
+Ass 1
+
+
+1)Write a program to create a file with a hole in it.
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdio.h>
+char buf1[]= "Welcome to";
+char buf2[]= "Wadia College";
+
+int main(void)
+{
+int fd;
+
+if((fd = creat("file.hole",0777))<0)
+printf("creat error");
+
+if(write(fd, buf1, 7)!=7)
+printf("buf1 write error");
+
+ lseek(fd,100,SEEK_CUR);
+
+if(write(fd,buf2, 16)!=16)
+printf("buf2 write error");
+exit(0);
+}  
+
+
+
+2)Write a program to open a file and go to sleep for 15 seconds before terminating.
+
+#include<stdio.h>
+#include<unistd.h>
+int main()
+{
+printf("welcome to wadia College\n");
+sleep(7);
+printf("welcome in msc cs\n");
+return 0;
+}
+
+
+3)Write a program to read the current directory and display the name of the files,
+size ofthe file, type of file and no of files in the current directory.
+
+#include <stdio.h>
+#include <string.h>
+#include <dirent.h>
+int findfileSize(const char *f_n) {
+FILE *fp = fopen(f_n, "r");
+if (fp == NULL) {
+printf("File not found!\n");
+return -1;
+}
+fseek(fp, 0L, SEEK_END);
+int res = ftell(fp);
+fclose(fp);
+return res;
+}
+void printFileExtension(const char *filename) {
+int i, show = 0;
+printf("File type = ");
+for (i = 0; i < strlen(filename); i++) {
+if (show || filename[i] == '.') {
+printf("%c", filename[i]);
+show = 1;
+}
+}
+printf("\n");
+}
+void listFilesInDirectory() {
+struct dirent *de;
+DIR *dr = opendir(".");
+int fileCount = 0;
+if (dr == NULL) {
+printf("Could not open the current directory\n");
+return;
+}
+while((de = readdir(dr)) != NULL) {
+printf("%s\n", de->d_name);
+}
+closedir(dr);
+}
+int main() {
+char filename[30];
+int fileSize;
+printf("Enter the file name:\n");
+scanf("%s", filename);
+printFileExtension(filename);
+fileSize = findfileSize(filename);
+if (fileSize != -1) {
+printf("Size of the file is %d bytes\n", fileSize);
+}
+listFilesInDirectory();
+return 0;
+}
+

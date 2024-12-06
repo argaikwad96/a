@@ -1,0 +1,85 @@
+Ass - 6
+Assignment 6 :
+Virtualization
+Prerequisite
+1. Concept of Virtualization.
+● Virtualization is a technology that helps us to install different Operating
+Systems on a hardware.
+● They are completely separated and independent from each other.
+● Virtualization hides the physical characteristics of computing resources from
+their users, their applications or end users. This includes making a single
+physical resource
+(such as a server, an operating system, an application or a storage device) appear
+to function as multiple virtual resources. It can also include making multiple
+physical resources (such as storage devices or servers) appear as a single virtual
+resource...”
+
+2. Virtualization types:
+Server Virtualization:
+It is virtualizing your server infrastructure
+where you do not have to use any more
+physical servers for different purposes.
+Client and Desktop Virtualization:
+This is similar to server
+virtualization, but this time is on the
+user’s site where you virtualize their
+desktops. We change their desktops
+with thin clients and by utilizing the
+datacenter resources.Services and applications of
+Virtualization : The virtualization
+technology isolates applications from
+the underlying operating system and
+from other applications, in order to
+increase compatibility and
+
+manageability. For example –
+Docker can be used for that purpose.
+1. Network Virtualization
+It is a part of virtualization
+infrastructure, which is used
+especially if you are going to
+visualize your servers. It helps
+you in creating multiple
+switching, Vlans, NAT-ing, etc.
+The following illustration
+shows2. Storage Virtualization
+This is widely used in data
+centers where you have a big
+storage and it helps you to
+create, delete, allocated storage
+to different hardware. This
+allocation is done through
+network connection. The leader
+on storage is SAN. A schematic
+illustration is given below:
+3. Hypervisor and its types.
+A hypervisor is a thin software layer that intercepts operating system calls to the hardware.
+It is also called the Virtual Machine Monitor (VMM). It creates a virtual
+platform on the host computer, on top of which multiple guest operating
+systems are executed and monitored.
+Hypervisors are two types:
+1. Native of Bare Metal Hypervisor
+Native hypervisors are software systems that run directly on the host's
+hardware to control the hardware and to monitor the Guest Operating
+Systems. The guest Operating system runs on a separate level above the
+hypervisor. All of them have Virtu2. Hosted Hypervisor
+Hosted hypervisors are designed to run within a traditional operating
+system. In other words, a hosted hypervisor adds a distinct software layer
+on top of the host operating system. While, the guest operating system
+becomes a third software level above the hardware.
+A well-known example of a hosted hypervisor is Oracle VM VirtualBox.
+Others include VMWare Server and Workstation, Microsoft Virtual PC,
+KVM, QEMU and Parallels.
+Advantages of Virtualization
+1. Using Virtualization for Efficient Hardware Utilization
+2. Using Virtualization to Increase Availability
+3. Disaster Recovery
+4. Save Energy
+5. Deploying Servers too fast
+6. Save Space in your Server Room or Datacenter
+7. Testing and setting up Lab Environment
+8. Shifting all your Local Infrastructure to Cloud in a day
+Disadvantages of Virtualization
+1. Extra Costs
+2. Software Licensing
+3. Learn the new Infrastructure
